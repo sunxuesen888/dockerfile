@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  strongswan:
+    build: .
+    container_name: strongswan
+    privilege: true
+    restart: always
+    network_mode: host
+    volumes:
+      - ${PWD}/data/ipsec.conf:/etc/ipsec.conf
+      - ${PWD}/data/ipsec.conf:/etc/ipsec.conf
+      - ${PWD}/data/ipsec.secrets:/etc/ipsec.secrets
+      - ${PWD}/data/certs/InfraCA.pem:/etc/ipsec.d/cacerts/InfraCA.pem
+      - ${PWD}/data/certs/InfraCA.key:/etc/ipsec.d/private/InfraCA.key
+        #      - ${PWD}/data/certs/cop.pem:/etc/ipsec.d/certs/cop.pem
+        #      - ${PWD}/data/certs/cop.key:/etc/ipsec.d/private/cop.key
+      - ${PWD}/data/certs/tjoffice.pem:/etc/ipsec.d/certs/tjoffice.pem
+      - ${PWD}/data/certs/tjoffice.key:/etc/ipsec.d/private/tjoffice.key
+
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
